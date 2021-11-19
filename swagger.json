@@ -1,0 +1,127 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Library",
+    "description": "Library NodeJs Application API",
+    "license": "ISC"
+  },
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Book",
+      "description": "API for book in the system"
+    }
+  ],
+  "consumers": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/book/create": {
+      "post": {
+        "tags": ["Book"],
+        "description": "Create new book in system",
+        "parameters": [
+          {
+            "name": "book",
+            "in": "body",
+            "required": true,
+            "description": "Book that we want to create",
+            "example": {
+              "title": "cien anos de soleded",
+              "pages": 402,
+              "year": 1962,
+              "isbn": "123-456-7890-A1",
+              "author": "Oka"
+            },
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "response": {
+          "200": {
+            "description": "New Book is created",
+            "examples": {
+              "application/json": {
+                "status": true,
+                "message": "Book Created!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/list": {
+      "get": {
+        "tags": ["Book"],
+        "responses": {
+          "200": {
+            "description": "All books are returned",
+            "examples": {
+              "application/json": {
+                "status": true,
+                "listBooks": "array"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/{isbn}": {
+      "parameters": [
+        {
+          "name": "isbn",
+          "in": "path",
+          "required": true,
+          "description": "Book isbn to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Book"],
+        "responses": {
+          "200": {
+            "description": "A book returned",
+            "example": {
+              "application/json": {
+                "status": true,
+                "bookByISBN": "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Book": {
+      "required": ["title", "pages", "year", "isbn", "author"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "uniqueItems": false,
+          "example": "Cien anos de soleded"
+        },
+        "pages": {
+          "type": "integer",
+          "example": 402
+        },
+        "year": {
+          "type": "integer",
+          "example": 1962
+        },
+        "isbn": {
+          "type": "string",
+          "uniqueItems": false,
+          "example": "123-456-7890-A1"
+        },
+        "author": {
+          "type": "string",
+          "uniqueItems": false,
+          "example": "Oka"
+        }
+      }
+    }
+  }
+}
